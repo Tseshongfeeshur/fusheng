@@ -1,0 +1,26 @@
+{
+    "fusheng": "Fusheng",
+    "sidebar": {
+        "slogan": "Life is short, and joy is fleeting."
+    },
+    "home": {
+        "title": "Home",
+        "addDiary": "Add a Diary",
+        "addEmotion": "Record the Emotion"
+    },
+    "settings": {
+        "title": "Settings",
+        "appearance": {
+            "title": "Appearance",
+            "font": {
+                "title": "Font",
+                "subtitle": "Select the UI font you love.",
+                "cancel": "Cancel",
+                "Default": "Default",
+                "Misans": "MiSans",
+                "LxgwWenkai": "LXGW Wenkai",
+                "ZhuqueFangsong": "Zhuque Serif"
+            }
+        }
+    }
+}

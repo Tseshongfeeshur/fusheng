@@ -1,0 +1,26 @@
+{
+    "fusheng": "浮生",
+    "sidebar": {
+        "slogan": "浮生若梦，欢日几何？"
+    },
+    "home": {
+        "title": "主页",
+        "addDiary": "新建日记",
+        "addEmotion": "记录心情"
+    },
+    "settings": {
+        "title": "设置",
+        "appearance": {
+            "title": "外观",
+            "font": {
+                "title": "字体",
+                "subtitle": "选择你喜欢的 UI 显示字体。",
+                "cancel": "取消",
+                "Default": "默认",
+                "Misans": "MiSans",
+                "LxgwWenkai": "霞鹜文楷",
+                "ZhuqueFangsong": "朱雀仿宋"
+            }
+        }
+    }
+}
