@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fusheng/i18n/strings.g.dart';
@@ -28,6 +29,7 @@ class FontSelectionDialog extends StatelessWidget {
           RadioGroup<String>(
             groupValue: fontModel.currentFont,
             onChanged: (String? val) {
+              HapticFeedback.selectionClick();
               fontModel.setFont(val);
               if (context.mounted) Navigator.pop(context);
             },
@@ -53,6 +55,7 @@ class FontSelectionDialog extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: () {
+                    HapticFeedback.warningNotification();
                     if (context.mounted) Navigator.pop(context);
                   },
                   child: Text(t.settings.appearance.font.cancel),

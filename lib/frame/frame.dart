@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -56,7 +57,8 @@ class AppFrame extends StatelessWidget {
       appBar: AppBar(
         title: GestureDetector(
           child: currentPage.title(context),
-          onTap: () {
+          onLongPress: () {
+            HapticFeedback.lightImpact();
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -67,6 +69,11 @@ class AppFrame extends StatelessWidget {
         ),
       ),
       drawer: Sidebar(),
+      onDrawerChanged: (isOpened) {
+        isOpened
+            ? HapticFeedback.successNotification()
+            : HapticFeedback.warningNotification();
+      },
       body: currentPage,
       floatingActionButton: currentPage.fab(context),
     );

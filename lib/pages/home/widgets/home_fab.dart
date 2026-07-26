@@ -5,7 +5,7 @@ import 'package:fusheng/i18n/strings.g.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class HomeFab extends StatefulWidget {
-  HomeFab({super.key});
+  const HomeFab({super.key});
 
   @override
   State<HomeFab> createState() => _HomeFabState();
@@ -16,25 +16,13 @@ class _HomeFabState extends State<HomeFab> {
 
   @override
   Widget build(BuildContext context) {
-    // return GestureDetector(
-    //   child: FloatingActionButton.extended(
-    //     onPressed: () {},
-    //     icon: const Icon(Icons.add),
-    //     label: Text(isPressed ? t.home.addEmotion : t.home.addDiary),
-    //     elevation: 4,
-    //   ),
-    //   onLongPressStart: (_) {
-    //     HapticFeedback.successNotification();
-    //     setState(() {
-    //       isPressed = true;
-    //     });
-    //   },
-    //   onLongPressEnd: (_) {},
-    // );
-
     return SpeedDial(
       elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      shape:
+          Theme.of(context).floatingActionButtonTheme.shape ??
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16.0)),
+          ),
 
       overlayOpacity: 0,
 
@@ -48,6 +36,14 @@ class _HomeFabState extends State<HomeFab> {
       activeIcon: Icons.add,
       animationAngle: 3.1415 / 4,
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+
+      onOpen: () {
+        HapticFeedback.successNotification();
+      },
+      onClose: () {
+        HapticFeedback.lightImpact();
+      },
+
       spacing: 12,
 
       children: [

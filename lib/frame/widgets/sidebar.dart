@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:fusheng/frame/frame.dart';
 import 'package:fusheng/i18n/strings.g.dart';
@@ -38,6 +39,7 @@ class SidebarItem extends StatelessWidget {
           ),
         ),
         onTap: () {
+          HapticFeedback.selectionClick();
           context.read<NavigationModel>().setIndex(index);
           Navigator.pop(context);
         },
