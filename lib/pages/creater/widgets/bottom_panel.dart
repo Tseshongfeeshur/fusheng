@@ -38,7 +38,7 @@ class _CreaterBottomPanelState extends State<BottomPanel>
     keyboardSubscription = keyboardVisibilityController.onChange.listen((
       bool visible,
     ) {
-      // 当从面板切换到键盘时面板不收回
+      // 当从键盘切换到面板时面板不收回
       if (_isFromKeyboardToPanel) {
         _isFromKeyboardToPanel = false;
         return;
@@ -57,6 +57,7 @@ class _CreaterBottomPanelState extends State<BottomPanel>
     _debounceTimer?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     _controller.dispose();
+    keyboardSubscription.cancel();
     super.dispose();
   }
 
@@ -92,7 +93,7 @@ class _CreaterBottomPanelState extends State<BottomPanel>
   // 状态机
   void _switchState(BottomPanelState target) {
     if (_panelState == target) return;
-    // 当从面板切换到键盘时，标记以防面板收回
+    // 当从键盘切换到面板时，标记以防面板收回
     if (_panelState == BottomPanelState.keyboard &&
         target == BottomPanelState.panel) {
       _isFromKeyboardToPanel = true;
@@ -106,7 +107,9 @@ class _CreaterBottomPanelState extends State<BottomPanel>
       // 加快动画速度，以补偿动画延迟
       durationToClose = _duration * 0.3;
     }
+
     setState(() => _panelState = target);
+
     switch (target) {
       case BottomPanelState.close:
         widget.focusNode.unfocus();
