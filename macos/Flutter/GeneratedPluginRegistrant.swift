@@ -5,8 +5,10 @@
 import FlutterMacOS
 import Foundation
 
-import system_theme
+import quill_native_bridge_macos
+import url_launcher_macos
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
-  SystemThemePlugin.register(with: registry.registrar(forPlugin: "SystemThemePlugin"))
+  QuillNativeBridgePlugin.register(with: registry.registrar(forPlugin: "QuillNativeBridgePlugin"))
+  UrlLauncherPlugin.register(with: registry.registrar(forPlugin: "UrlLauncherPlugin"))
 }

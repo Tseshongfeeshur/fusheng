@@ -22,5 +22,18 @@
                 "ZhuqueFangsong": "朱雀仿宋"
             }
         }
+    },
+    "creater": {
+        "menu": {
+            "tags": "标签",
+            "share": "分享",
+            "import": "导入",
+            "search": "搜索 / 替换"
+        },
+        "actions": {
+            "title": "标题",
+            "list": "列表",
+            "quote": "引用"
+        }
     }
 }

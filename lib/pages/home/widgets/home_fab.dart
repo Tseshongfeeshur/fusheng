@@ -12,18 +12,25 @@ class HomeFab extends StatefulWidget {
 }
 
 class _HomeFabState extends State<HomeFab> {
-  bool isPressed = false;
-
   @override
   Widget build(BuildContext context) {
-    return SpeedDial(
-      elevation: 4,
-      shape:
-          Theme.of(context).floatingActionButtonTheme.shape ??
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16.0)),
-          ),
+    final Color background =
+        Color.lerp(
+          Theme.of(context).colorScheme.primary,
+          Theme.of(context).colorScheme.tertiary,
+          0.1,
+        ) ??
+        Theme.of(context).colorScheme.onSecondaryContainer;
+    final backgroundWithOpacity = background.withAlpha(48);
 
+    final List<String> emotions = ["😄", "😡", "😔", "🤔", "😭", "😨", "😱"];
+
+    return SpeedDial(
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+
+      backgroundColor: background,
+      foregroundColor: Theme.of(context).colorScheme.secondaryContainer,
       overlayOpacity: 0,
 
       animationDuration: const Duration(milliseconds: 200),
@@ -33,63 +40,29 @@ class _HomeFabState extends State<HomeFab> {
       activeLabel: Text(t.home.addEmotion),
 
       icon: Icons.add,
-      activeIcon: Icons.add,
-      animationAngle: 3.1415 / 4,
-      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+      activeIcon: Icons.close,
+      useRotationAnimation: false,
 
       onOpen: () {
         HapticFeedback.successNotification();
       },
-      onClose: () {
-        HapticFeedback.lightImpact();
-      },
 
-      spacing: 12,
+      spacing: 8,
+      spaceBetweenChildren: 10,
+      childrenButtonSize: Size(44, 44),
+      childPadding: EdgeInsets.all(0),
 
-      children: [
-        SpeedDialChild(
-          child: const Text("😄", style: TextStyle(fontSize: 20)),
-          shape: CircleBorder(),
-          elevation: 4,
-          backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-        ),
-        SpeedDialChild(
-          child: const Text("😡", style: TextStyle(fontSize: 20)),
-          shape: CircleBorder(),
-          elevation: 4,
-          backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-        ),
-        SpeedDialChild(
-          child: const Text("😔", style: TextStyle(fontSize: 20)),
-          shape: CircleBorder(),
-          elevation: 4,
-          backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-        ),
-        SpeedDialChild(
-          child: const Text("🤔", style: TextStyle(fontSize: 20)),
-          shape: CircleBorder(),
-          elevation: 4,
-          backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-        ),
-        SpeedDialChild(
-          child: const Text("😭", style: TextStyle(fontSize: 20)),
-          shape: CircleBorder(),
-          elevation: 4,
-          backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-        ),
-        SpeedDialChild(
-          child: const Text("😨", style: TextStyle(fontSize: 20)),
-          shape: CircleBorder(),
-          elevation: 4,
-          backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-        ),
-        SpeedDialChild(
-          child: const Text("😱", style: TextStyle(fontSize: 20)),
-          shape: CircleBorder(),
-          elevation: 4,
-          backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-        ),
-      ],
+      children: emotions.map((emoji) {
+        return SpeedDialChild(
+          child: Text(emoji, style: const TextStyle(fontSize: 20, height: 1)),
+          shape: const CircleBorder(),
+          elevation: 0,
+          backgroundColor: backgroundWithOpacity,
+          onTap: () {
+            // TODO: 点击表情后的逻辑
+          },
+        );
+      }).toList(),
     );
   }
 }

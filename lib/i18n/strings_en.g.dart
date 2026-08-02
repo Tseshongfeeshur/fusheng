@@ -47,6 +47,7 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	late final Translations$sidebar$en sidebar = Translations$sidebar$en._(_root);
 	late final Translations$home$en home = Translations$home$en._(_root);
 	late final Translations$settings$en settings = Translations$settings$en._(_root);
+	late final Translations$creater$en creater = Translations$creater$en._(_root);
 }
 
 // Path: sidebar
@@ -75,8 +76,8 @@ class Translations$home$en {
 	/// en: 'Add a Diary'
 	String get addDiary => 'Add a Diary';
 
-	/// en: 'Add a Emotion'
-	String get addEmotion => 'Add a Emotion';
+	/// en: 'Add a Diary'
+	String get addEmotion => 'Add a Diary';
 }
 
 // Path: settings
@@ -93,6 +94,17 @@ class Translations$settings$en {
 	late final Translations$settings$appearance$en appearance = Translations$settings$appearance$en._(_root);
 }
 
+// Path: creater
+class Translations$creater$en {
+	Translations$creater$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	late final Translations$creater$menu$en menu = Translations$creater$menu$en._(_root);
+	late final Translations$creater$actions$en actions = Translations$creater$actions$en._(_root);
+}
+
 // Path: settings.appearance
 class Translations$settings$appearance$en {
 	Translations$settings$appearance$en._(this._root);
@@ -105,6 +117,45 @@ class Translations$settings$appearance$en {
 	String get title => 'Appearance';
 
 	late final Translations$settings$appearance$font$en font = Translations$settings$appearance$font$en._(_root);
+}
+
+// Path: creater.menu
+class Translations$creater$menu$en {
+	Translations$creater$menu$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Tags'
+	String get tags => 'Tags';
+
+	/// en: 'Share'
+	String get share => 'Share';
+
+	/// en: 'Import'
+	String get import => 'Import';
+
+	/// en: 'Search / Replace'
+	String get search => 'Search / Replace';
+}
+
+// Path: creater.actions
+class Translations$creater$actions$en {
+	Translations$creater$actions$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Title'
+	String get title => 'Title';
+
+	/// en: 'List'
+	String get list => 'List';
+
+	/// en: 'Quote'
+	String get quote => 'Quote';
 }
 
 // Path: settings.appearance.font
@@ -149,7 +200,7 @@ extension on Translations {
 			'sidebar.slogan' => 'Life is short, and joy is fleeting.',
 			'home.title' => 'Home',
 			'home.addDiary' => 'Add a Diary',
-			'home.addEmotion' => 'Add a Emotion',
+			'home.addEmotion' => 'Add a Diary',
 			'settings.title' => 'Settings',
 			'settings.appearance.title' => 'Appearance',
 			'settings.appearance.font.title' => 'Font',
@@ -159,6 +210,13 @@ extension on Translations {
 			'settings.appearance.font.Misans' => 'MiSans',
 			'settings.appearance.font.LxgwWenkai' => 'LXGW Wenkai',
 			'settings.appearance.font.ZhuqueFangsong' => 'Zhuque Serif',
+			'creater.menu.tags' => 'Tags',
+			'creater.menu.share' => 'Share',
+			'creater.menu.import' => 'Import',
+			'creater.menu.search' => 'Search / Replace',
+			'creater.actions.title' => 'Title',
+			'creater.actions.list' => 'List',
+			'creater.actions.quote' => 'Quote',
 			_ => null,
 		};
 	}

@@ -6,7 +6,7 @@
     "home": {
         "title": "Home",
         "addDiary": "Add a Diary",
-        "addEmotion": "Record the Emotion"
+        "addEmotion": "Add a Diary"
     },
     "settings": {
         "title": "Settings",
@@ -21,6 +21,19 @@
                 "LxgwWenkai": "LXGW Wenkai",
                 "ZhuqueFangsong": "Zhuque Serif"
             }
+        }
+    },
+    "creater": {
+        "menu": {
+            "tags": "Tags",
+            "share": "Share",
+            "import": "Import",
+            "search": "Search / Replace"
+        },
+        "actions": {
+            "title": "Title",
+            "list": "List",
+            "quote": "Quote"
         }
     }
 }

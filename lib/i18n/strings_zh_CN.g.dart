@@ -41,6 +41,7 @@ class TranslationsZhCn with BaseTranslations<AppLocale, Translations> implements
 	@override late final _Translations$sidebar$zh_CN sidebar = _Translations$sidebar$zh_CN._(_root);
 	@override late final _Translations$home$zh_CN home = _Translations$home$zh_CN._(_root);
 	@override late final _Translations$settings$zh_CN settings = _Translations$settings$zh_CN._(_root);
+	@override late final _Translations$creater$zh_CN creater = _Translations$creater$zh_CN._(_root);
 }
 
 // Path: sidebar
@@ -76,6 +77,17 @@ class _Translations$settings$zh_CN implements Translations$settings$en {
 	@override late final _Translations$settings$appearance$zh_CN appearance = _Translations$settings$appearance$zh_CN._(_root);
 }
 
+// Path: creater
+class _Translations$creater$zh_CN implements Translations$creater$en {
+	_Translations$creater$zh_CN._(this._root);
+
+	final TranslationsZhCn _root; // ignore: unused_field
+
+	// Translations
+	@override late final _Translations$creater$menu$zh_CN menu = _Translations$creater$menu$zh_CN._(_root);
+	@override late final _Translations$creater$actions$zh_CN actions = _Translations$creater$actions$zh_CN._(_root);
+}
+
 // Path: settings.appearance
 class _Translations$settings$appearance$zh_CN implements Translations$settings$appearance$en {
 	_Translations$settings$appearance$zh_CN._(this._root);
@@ -85,6 +97,31 @@ class _Translations$settings$appearance$zh_CN implements Translations$settings$a
 	// Translations
 	@override String get title => '外观';
 	@override late final _Translations$settings$appearance$font$zh_CN font = _Translations$settings$appearance$font$zh_CN._(_root);
+}
+
+// Path: creater.menu
+class _Translations$creater$menu$zh_CN implements Translations$creater$menu$en {
+	_Translations$creater$menu$zh_CN._(this._root);
+
+	final TranslationsZhCn _root; // ignore: unused_field
+
+	// Translations
+	@override String get tags => '标签';
+	@override String get share => '分享';
+	@override String get import => '导入';
+	@override String get search => '搜索 / 替换';
+}
+
+// Path: creater.actions
+class _Translations$creater$actions$zh_CN implements Translations$creater$actions$en {
+	_Translations$creater$actions$zh_CN._(this._root);
+
+	final TranslationsZhCn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => '标题';
+	@override String get list => '列表';
+	@override String get quote => '引用';
 }
 
 // Path: settings.appearance.font
@@ -125,6 +162,13 @@ extension on TranslationsZhCn {
 			'settings.appearance.font.Misans' => 'MiSans',
 			'settings.appearance.font.LxgwWenkai' => '霞鹜文楷',
 			'settings.appearance.font.ZhuqueFangsong' => '朱雀仿宋',
+			'creater.menu.tags' => '标签',
+			'creater.menu.share' => '分享',
+			'creater.menu.import' => '导入',
+			'creater.menu.search' => '搜索 / 替换',
+			'creater.actions.title' => '标题',
+			'creater.actions.list' => '列表',
+			'creater.actions.quote' => '引用',
 			_ => null,
 		};
 	}

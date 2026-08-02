@@ -2,7 +2,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:fusheng/pages/test/color_scheme.dart';
+// import 'package:fusheng/pages/test/time_line_1.dart';
+// import 'package:fusheng/pages/test/color_scheme.dart';
+import 'package:fusheng/pages/creater/creater.dart';
 import 'package:fusheng/frame/widgets/sidebar.dart';
 
 import 'package:fusheng/frame/data/fonts.dart';
@@ -62,7 +64,9 @@ class AppFrame extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (BuildContext context) => ColorSchemeDebugger(),
+                // builder: (BuildContext context) => ColorSchemeDebugger(),
+                // builder: (BuildContext context) => DiaryTimelinePage(),
+                builder: (BuildContext context) => Creater(),
               ),
             );
           },
@@ -70,9 +74,7 @@ class AppFrame extends StatelessWidget {
       ),
       drawer: Sidebar(),
       onDrawerChanged: (isOpened) {
-        isOpened
-            ? HapticFeedback.successNotification()
-            : HapticFeedback.warningNotification();
+        if (isOpened) HapticFeedback.successNotification();
       },
       body: currentPage,
       floatingActionButton: currentPage.fab(context),

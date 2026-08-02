@@ -19,7 +19,7 @@ class FontSelectionDialog extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(22, 22, 0, 12),
+            padding: const EdgeInsets.fromLTRB(22, 18, 0, 12),
             child: Text(
               t.settings.appearance.font.title,
               style: Theme.of(context).textTheme.titleLarge,

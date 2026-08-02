@@ -21,31 +21,19 @@ class SidebarItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final selected = context.watch<NavigationModel>().currentIndex == index;
 
-    return Padding(
-      padding: const EdgeInsets.only(right: 40),
-      child: ListTile(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(999),
-            bottomRight: Radius.circular(999),
-          ),
-        ),
-        leading: selected ? selectedIcon : normalIcon,
-        title: Text(
-          content,
-          style: TextStyle(
-            // fontSize: 18,
-            fontWeight: selected ? FontWeight(600) : null,
-          ),
-        ),
-        onTap: () {
-          HapticFeedback.selectionClick();
-          context.read<NavigationModel>().setIndex(index);
-          Navigator.pop(context);
-        },
-        selected: selected,
-        selectedTileColor: Theme.of(context).colorScheme.primaryContainer,
+    return ListTile(
+      leading: selected ? selectedIcon : normalIcon,
+      title: Text(
+        content,
+        style: TextStyle(fontWeight: selected ? FontWeight(600) : null),
       ),
+      onTap: () {
+        HapticFeedback.selectionClick();
+        context.read<NavigationModel>().setIndex(index);
+        Navigator.pop(context);
+      },
+      selected: selected,
+      selectedTileColor: Theme.of(context).colorScheme.primaryContainer,
     );
   }
 }
@@ -64,11 +52,18 @@ class Sidebar extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Spacer(),
-                Text(t.sidebar.slogan, style: TextStyle(fontSize: 20)),
+                Text(
+                  t.sidebar.slogan,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight(300),
+                    color: Theme.of(context).colorScheme.primary.withAlpha(68),
+                    height: 1.24,
+                  ),
+                ),
               ],
             ),
           ),
-          SizedBox(height: 8),
           SidebarItem(
             normalIcon: const Icon(Icons.home_outlined),
             selectedIcon: const Icon(Icons.home),
