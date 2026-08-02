@@ -1,11 +1,13 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:flutter_keyboard_visibility_temp_fork/flutter_keyboard_visibility_temp_fork.dart';
 
 import 'package:fusheng/pages/creater/widgets/bottom_panel_content.dart';
 
-enum BottomPanelState { close, panel, keybord }
+enum BottomPanelState { close, panel, keyboard }
 
 class BottomPanel extends StatefulWidget {
   final FocusNode focusNode;
@@ -18,37 +20,41 @@ class BottomPanel extends StatefulWidget {
 class _CreaterBottomPanelState extends State<BottomPanel>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   BottomPanelState _panelState = BottomPanelState.close;
-  bool _isSwitchingPanel = false;
+
+  double _maxHeight = 300; // 预设键盘高度
+  Timer? _debounceTimer; // 用于测量键盘高度的防抖计时器
+  final Duration _duration = Duration(milliseconds: 300);
+  final Curve _curve = Curves.easeOutCubic;
+
   late StreamSubscription<bool> keyboardSubscription;
-
-  double _maxHeight = 300; // 键盘高度
-  final Duration _duration = Duration(milliseconds: 200);
-  final Curve _curve = Curves.fastOutSlowIn;
-
-  final keyboardVisibilityController = KeyboardVisibilityController();
   late AnimationController _controller;
+  bool _isFromKeyboardToPanel = false;
 
   @override
   void initState() {
     super.initState();
 
-    _controller = AnimationController(vsync: this, duration: _duration);
-
+    var keyboardVisibilityController = KeyboardVisibilityController();
     keyboardSubscription = keyboardVisibilityController.onChange.listen((
       bool visible,
     ) {
-      if (!visible && _isSwitchingPanel) {
-        _isSwitchingPanel = false;
+      // 当从面板切换到键盘时面板不收回
+      if (_isFromKeyboardToPanel) {
+        _isFromKeyboardToPanel = false;
         return;
-      } // 点击按钮手动切换到 panel 时，不监听键盘状态
-      _switchState(visible ? BottomPanelState.keybord : BottomPanelState.close);
+      }
+      _switchState(
+        visible ? BottomPanelState.keyboard : BottomPanelState.close,
+      );
     });
+
+    _controller = AnimationController(vsync: this, duration: _duration);
     WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
-    keyboardSubscription.cancel();
+    _debounceTimer?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     _controller.dispose();
     super.dispose();
@@ -61,48 +67,52 @@ class _CreaterBottomPanelState extends State<BottomPanel>
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
+      final inset = MediaQuery.viewInsetsOf(context).bottom;
 
-      final bottomInset =
-          View.of(context).viewInsets.bottom /
-          View.of(context).devicePixelRatio;
+      // 只在键盘弹出时监测高度
+      if (inset <= 0) return;
 
-      if (_panelState == BottomPanelState.keybord &&
-          keyboardVisibilityController.isVisible) {
-        if (bottomInset > 0) {
-          _maxHeight = bottomInset;
-          _controller.value = 1.0;
-        } else {
-          // inset 归零说明原生收起动画已经跟上了，收尾对齐一次，避免累计误差
-          _switchState(BottomPanelState.close);
+      // 取消上一次的防抖计时
+      _debounceTimer?.cancel();
+
+      // 设定新的防抖计时，300ms 后认为高度已稳定
+      _debounceTimer = Timer(const Duration(milliseconds: 300), () {
+        if (!mounted) return;
+        // 再次确认当前高度，避免延迟期间值改变
+        final stableInset = MediaQuery.viewInsetsOf(context).bottom;
+        if (stableInset > 0 && (stableInset - _maxHeight).abs() > 10) {
+          setState(() {
+            _maxHeight = stableInset;
+          });
         }
-      }
-
-      print(bottomInset);
+      });
     });
   }
 
   // 状态机
   void _switchState(BottomPanelState target) {
     if (_panelState == target) return;
-    if (_panelState == BottomPanelState.keybord &&
+    // 当从面板切换到键盘时，标记以防面板收回
+    if (_panelState == BottomPanelState.keyboard &&
         target == BottomPanelState.panel) {
-      _isSwitchingPanel = true;
+      _isFromKeyboardToPanel = true;
     } else {
-      _isSwitchingPanel = false;
+      _isFromKeyboardToPanel = false;
+    }
+
+    Duration durationToClose = _duration * _controller.value;
+    if (_panelState == BottomPanelState.keyboard &&
+        target == BottomPanelState.close) {
+      // 加快动画速度，以补偿动画延迟
+      durationToClose = _duration * 0.3;
     }
     setState(() => _panelState = target);
     switch (target) {
       case BottomPanelState.close:
-        print('[STTIFO] close');
         widget.focusNode.unfocus();
-        _controller.animateTo(
-          0,
-          curve: _curve,
-          duration: _duration * _controller.value,
-        );
+        _controller.animateTo(0, curve: _curve, duration: durationToClose);
         break;
       case BottomPanelState.panel:
-        print('[STTIFO] panel');
         widget.focusNode.unfocus();
         _controller.animateTo(
           1,
@@ -110,8 +120,7 @@ class _CreaterBottomPanelState extends State<BottomPanel>
           duration: _duration * (1 - _controller.value),
         );
         break;
-      case BottomPanelState.keybord:
-        print('[STTIFO] keyboard');
+      case BottomPanelState.keyboard:
         _controller.animateTo(
           1,
           curve: _curve,
@@ -145,12 +154,6 @@ class _CreaterBottomPanelState extends State<BottomPanel>
       // 否则根据位置判断意图
       targetProgress = _controller.value > 0.5 ? 1.0 : 0.0;
     }
-
-    _controller.animateTo(
-      targetProgress,
-      curve: _curve,
-      duration: _duration * (targetProgress - _controller.value).abs(),
-    );
 
     _switchState(
       targetProgress == 1 ? BottomPanelState.panel : BottomPanelState.close,
@@ -208,7 +211,7 @@ class _CreaterBottomPanelState extends State<BottomPanel>
                         _panelState == BottomPanelState.panel
                         ? BottomBarItem(
                             onTap: () {
-                              _switchState(BottomPanelState.keybord);
+                              _switchState(BottomPanelState.keyboard);
                             },
                             icon: Icon(Icons.keyboard),
                           )
