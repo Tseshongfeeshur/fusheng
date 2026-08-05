@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_keyboard_visibility_temp_fork/flutter_keyboard_visibility_temp_fork.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 
 import 'package:fusheng/pages/creater/widgets/bottom_panel_content.dart';
 
@@ -11,7 +12,12 @@ enum BottomPanelState { close, panel, keyboard }
 
 class BottomPanel extends StatefulWidget {
   final FocusNode focusNode;
-  const BottomPanel({super.key, required this.focusNode});
+  final QuillController quillController;
+  const BottomPanel({
+    super.key,
+    required this.focusNode,
+    required this.quillController,
+  });
 
   @override
   State<BottomPanel> createState() => _CreaterBottomPanelState();
@@ -165,84 +171,87 @@ class _CreaterBottomPanelState extends State<BottomPanel>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ListenableBuilder(
-          listenable: _controller,
-          builder: (context, child) {
-            final EdgeInsets safePadding = MediaQuery.paddingOf(context);
-            return Container(
-              decoration: BoxDecoration(
-                border: BoxBorder.fromLTRB(
-                  top: BorderSide(
-                    width: 2,
-                    color: Theme.of(context).colorScheme.outline,
-                  ),
-                  bottom: BorderSide(
-                    width: 1,
-                    color: Theme.of(context).colorScheme.outlineVariant
-                        .withAlpha((255 * _controller.value).toInt()),
-                  ),
-                ),
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(
-                  bottom: safePadding.bottom * (1 - _controller.value),
-                ),
-                child: child,
-              ),
-            );
-          },
-          child: GestureDetector(
-            onVerticalDragUpdate: _onDragUpdate,
-            onVerticalDragEnd: _onDragEnd,
-            behavior: HitTestBehavior.opaque,
+    return PopScope(
+      // false 时按返回键不会退出当前页面
+      canPop: !(_panelState == BottomPanelState.panel),
+      onPopInvokedWithResult: (bool didPop, dynamic result) {
+        // 如果成功 pop，直接返回
+        if (didPop) return;
 
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  BottomBarItem(onTap: () {}, icon: Icon(Icons.space_bar)),
-                  BottomBarItem(onTap: () {}, icon: Icon(Icons.space_bar)),
-                  BottomBarItem(onTap: () {}, icon: Icon(Icons.space_bar)),
-                  BottomBarItem(onTap: () {}, icon: Icon(Icons.space_bar)),
-                  ListenableBuilder(
-                    listenable: _controller,
-                    builder: (context, child) =>
-                        _panelState == BottomPanelState.panel
-                        ? BottomBarItem(
-                            onTap: () {
-                              _switchState(BottomPanelState.keyboard);
-                            },
-                            icon: Icon(Icons.keyboard),
-                          )
-                        : BottomBarItem(
-                            onTap: () {
-                              _switchState(BottomPanelState.panel);
-                            },
-                            icon: Icon(Icons.widgets_outlined),
-                          ),
+        // 如果面板打开，返回时收起面板
+        if (_panelState == BottomPanelState.panel) {
+          _switchState(BottomPanelState.close);
+        }
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListenableBuilder(
+            listenable: _controller,
+            builder: (context, child) {
+              final EdgeInsets safePadding = MediaQuery.paddingOf(context);
+              return Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.secondaryContainer,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    bottom: safePadding.bottom * (1 - _controller.value),
                   ),
-                ],
+                  child: child,
+                ),
+              );
+            },
+            child: GestureDetector(
+              onVerticalDragUpdate: _onDragUpdate,
+              onVerticalDragEnd: _onDragEnd,
+              behavior: HitTestBehavior.opaque,
+
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    BottomBarItem(onTap: () {}, icon: Icon(Icons.space_bar)),
+                    BottomBarItem(onTap: () {}, icon: Icon(Icons.space_bar)),
+                    BottomBarItem(onTap: () {}, icon: Icon(Icons.space_bar)),
+                    BottomBarItem(onTap: () {}, icon: Icon(Icons.space_bar)),
+                    ListenableBuilder(
+                      listenable: _controller,
+                      builder: (context, child) =>
+                          _panelState == BottomPanelState.panel
+                          ? BottomBarItem(
+                              onTap: () {
+                                _switchState(BottomPanelState.keyboard);
+                              },
+                              icon: Icon(Icons.keyboard),
+                            )
+                          : BottomBarItem(
+                              onTap: () {
+                                _switchState(BottomPanelState.panel);
+                              },
+                              icon: Icon(Icons.widgets_outlined),
+                            ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        ListenableBuilder(
-          listenable: _controller,
-          child: BottomPanelContent(),
-          builder: (BuildContext context, child) {
-            double currentHeight = _controller.value * _maxHeight;
+          ListenableBuilder(
+            listenable: _controller,
+            child: BottomPanelContent(controller: widget.quillController),
+            builder: (BuildContext context, child) {
+              double currentHeight = _controller.value * _maxHeight;
 
-            return SizedBox(
-              height: currentHeight,
-              child: ClipRect(child: child),
-            );
-          },
-        ),
-      ],
+              return SizedBox(
+                height: currentHeight,
+                child: ClipRect(child: child),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }

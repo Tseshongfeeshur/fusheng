@@ -28,12 +28,34 @@
             "tags": "Tags",
             "share": "Share",
             "import": "Import",
+            "export": "Export",
             "search": "Search / Replace"
         },
         "actions": {
-            "title": "Title",
-            "list": "List",
-            "quote": "Quote"
+            "inline": {
+                "fontSize": "Font Size",
+                "bold": "Bold",
+                "italic": "Italic",
+                "underline": "Underline",
+                "strikethrough": "Strikethrough",
+                "inlineCode": "Inline Code",
+                "subscript": "Subscript",
+                "superscript": "Superscript",
+                "textColor": "Text Color",
+                "backgroundColor": "Background Color",
+                "link": "Insert Link"
+            },
+            "block": {
+                "clearFormat": "Clear Formatting",
+                "heading": "Heading",
+                "orderedList": "Numbered List",
+                "unorderedList": "Bullet List",
+                "todoList": "Task List",
+                "codeBlock": "Code Block",
+                "quote": "Blockquote",
+                "indent": "Increase Indent",
+                "outdent": "Decrease Indent"
+            }
         }
     }
 }

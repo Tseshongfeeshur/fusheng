@@ -28,12 +28,34 @@
             "tags": "标签",
             "share": "分享",
             "import": "导入",
+            "export": "导出",
             "search": "搜索 / 替换"
         },
         "actions": {
-            "title": "标题",
-            "list": "列表",
-            "quote": "引用"
+            "inline": {
+                "fontSize": "字号",
+                "bold": "加粗",
+                "italic": "斜体",
+                "underline": "下划线",
+                "strikethrough": "删除线",
+                "inlineCode": "行内代码",
+                "subscript": "下标",
+                "superscript": "上标",
+                "textColor": "文字颜色",
+                "backgroundColor": "背景颜色",
+                "link": "插入链接"
+            },
+            "block": {
+                "clearFormat": "清除格式",
+                "heading": "标题",
+                "orderedList": "有序列表",
+                "unorderedList": "无序列表",
+                "todoList": "任务列表",
+                "codeBlock": "代码块",
+                "quote": "引用",
+                "indent": "增加缩进",
+                "outdent": "减少缩进"
+            }
         }
     }
 }

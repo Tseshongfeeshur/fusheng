@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:fusheng/pages/creater/widgets/optimized_editor.dart';
 
 import 'package:fusheng/pages/creater/widgets/popup_menu.dart';
 import 'package:fusheng/pages/creater/widgets/bottom_panel.dart';
@@ -37,25 +38,24 @@ class _CreaterState extends State<Creater> {
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.undo)),
           IconButton(onPressed: () {}, icon: Icon(Icons.redo)),
-          PopupMenu(),
+          SizedBox(width: 8),
+          PopupMenu(controller: _controller),
         ],
       ),
       body: Column(
         children: [
-          QuillSimpleToolbar(
-            controller: _controller,
-            config: const QuillSimpleToolbarConfig(),
-          ),
           Expanded(
-            child: QuillEditor.basic(
+            child: OptimizedEditor(
               controller: _controller,
-              config: QuillEditorConfig(),
               focusNode: _focusNode,
             ),
           ),
         ],
       ),
-      bottomNavigationBar: BottomPanel(focusNode: _focusNode),
+      bottomNavigationBar: BottomPanel(
+        focusNode: _focusNode,
+        quillController: _controller,
+      ),
     );
   }
 }

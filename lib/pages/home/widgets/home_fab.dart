@@ -14,23 +14,13 @@ class HomeFab extends StatefulWidget {
 class _HomeFabState extends State<HomeFab> {
   @override
   Widget build(BuildContext context) {
-    final Color background =
-        Color.lerp(
-          Theme.of(context).colorScheme.primary,
-          Theme.of(context).colorScheme.tertiary,
-          0.1,
-        ) ??
-        Theme.of(context).colorScheme.onSecondaryContainer;
-    final backgroundWithOpacity = background.withAlpha(48);
-
     final List<String> emotions = ["😄", "😡", "😔", "🤔", "😭", "😨", "😱"];
 
     return SpeedDial(
-      elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+      shape:
+          Theme.of(context).floatingActionButtonTheme.shape ??
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
 
-      backgroundColor: background,
-      foregroundColor: Theme.of(context).colorScheme.secondaryContainer,
       overlayOpacity: 0,
 
       animationDuration: const Duration(milliseconds: 200),
@@ -56,8 +46,7 @@ class _HomeFabState extends State<HomeFab> {
         return SpeedDialChild(
           child: Text(emoji, style: const TextStyle(fontSize: 20, height: 1)),
           shape: const CircleBorder(),
-          elevation: 0,
-          backgroundColor: backgroundWithOpacity,
+          backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
           onTap: () {
             // TODO: 点击表情后的逻辑
           },

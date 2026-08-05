@@ -136,6 +136,9 @@ class Translations$creater$menu$en {
 	/// en: 'Import'
 	String get import => 'Import';
 
+	/// en: 'Export'
+	String get export => 'Export';
+
 	/// en: 'Search / Replace'
 	String get search => 'Search / Replace';
 }
@@ -147,15 +150,8 @@ class Translations$creater$actions$en {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-
-	/// en: 'Title'
-	String get title => 'Title';
-
-	/// en: 'List'
-	String get list => 'List';
-
-	/// en: 'Quote'
-	String get quote => 'Quote';
+	late final Translations$creater$actions$inline$en inline = Translations$creater$actions$inline$en._(_root);
+	late final Translations$creater$actions$block$en block = Translations$creater$actions$block$en._(_root);
 }
 
 // Path: settings.appearance.font
@@ -188,6 +184,84 @@ class Translations$settings$appearance$font$en {
 	String get ZhuqueFangsong => 'Zhuque Serif';
 }
 
+// Path: creater.actions.inline
+class Translations$creater$actions$inline$en {
+	Translations$creater$actions$inline$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Font Size'
+	String get fontSize => 'Font Size';
+
+	/// en: 'Bold'
+	String get bold => 'Bold';
+
+	/// en: 'Italic'
+	String get italic => 'Italic';
+
+	/// en: 'Underline'
+	String get underline => 'Underline';
+
+	/// en: 'Strikethrough'
+	String get strikethrough => 'Strikethrough';
+
+	/// en: 'Inline Code'
+	String get inlineCode => 'Inline Code';
+
+	/// en: 'Subscript'
+	String get subscript => 'Subscript';
+
+	/// en: 'Superscript'
+	String get superscript => 'Superscript';
+
+	/// en: 'Text Color'
+	String get textColor => 'Text Color';
+
+	/// en: 'Background Color'
+	String get backgroundColor => 'Background Color';
+
+	/// en: 'Insert Link'
+	String get link => 'Insert Link';
+}
+
+// Path: creater.actions.block
+class Translations$creater$actions$block$en {
+	Translations$creater$actions$block$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Clear Formatting'
+	String get clearFormat => 'Clear Formatting';
+
+	/// en: 'Heading'
+	String get heading => 'Heading';
+
+	/// en: 'Numbered List'
+	String get orderedList => 'Numbered List';
+
+	/// en: 'Bullet List'
+	String get unorderedList => 'Bullet List';
+
+	/// en: 'Task List'
+	String get todoList => 'Task List';
+
+	/// en: 'Code Block'
+	String get codeBlock => 'Code Block';
+
+	/// en: 'Blockquote'
+	String get quote => 'Blockquote';
+
+	/// en: 'Increase Indent'
+	String get indent => 'Increase Indent';
+
+	/// en: 'Decrease Indent'
+	String get outdent => 'Decrease Indent';
+}
+
 /// The flat map containing all translations for locale <en>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
@@ -213,10 +287,28 @@ extension on Translations {
 			'creater.menu.tags' => 'Tags',
 			'creater.menu.share' => 'Share',
 			'creater.menu.import' => 'Import',
+			'creater.menu.export' => 'Export',
 			'creater.menu.search' => 'Search / Replace',
-			'creater.actions.title' => 'Title',
-			'creater.actions.list' => 'List',
-			'creater.actions.quote' => 'Quote',
+			'creater.actions.inline.fontSize' => 'Font Size',
+			'creater.actions.inline.bold' => 'Bold',
+			'creater.actions.inline.italic' => 'Italic',
+			'creater.actions.inline.underline' => 'Underline',
+			'creater.actions.inline.strikethrough' => 'Strikethrough',
+			'creater.actions.inline.inlineCode' => 'Inline Code',
+			'creater.actions.inline.subscript' => 'Subscript',
+			'creater.actions.inline.superscript' => 'Superscript',
+			'creater.actions.inline.textColor' => 'Text Color',
+			'creater.actions.inline.backgroundColor' => 'Background Color',
+			'creater.actions.inline.link' => 'Insert Link',
+			'creater.actions.block.clearFormat' => 'Clear Formatting',
+			'creater.actions.block.heading' => 'Heading',
+			'creater.actions.block.orderedList' => 'Numbered List',
+			'creater.actions.block.unorderedList' => 'Bullet List',
+			'creater.actions.block.todoList' => 'Task List',
+			'creater.actions.block.codeBlock' => 'Code Block',
+			'creater.actions.block.quote' => 'Blockquote',
+			'creater.actions.block.indent' => 'Increase Indent',
+			'creater.actions.block.outdent' => 'Decrease Indent',
 			_ => null,
 		};
 	}

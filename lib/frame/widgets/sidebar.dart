@@ -21,19 +21,28 @@ class SidebarItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final selected = context.watch<NavigationModel>().currentIndex == index;
 
-    return ListTile(
-      leading: selected ? selectedIcon : normalIcon,
-      title: Text(
-        content,
-        style: TextStyle(fontWeight: selected ? FontWeight(600) : null),
+    return Padding(
+      padding: const EdgeInsets.only(right: 36),
+      child: ListTile(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusGeometry.only(
+            bottomRight: Radius.circular(1024),
+            topRight: Radius.circular(1024),
+          ),
+        ),
+        leading: selected ? selectedIcon : normalIcon,
+        title: Text(
+          content,
+          style: TextStyle(fontWeight: selected ? FontWeight(600) : null),
+        ),
+        onTap: () {
+          HapticFeedback.selectionClick();
+          context.read<NavigationModel>().setIndex(index);
+          Navigator.pop(context);
+        },
+        selected: selected,
+        selectedTileColor: Theme.of(context).colorScheme.primaryContainer,
       ),
-      onTap: () {
-        HapticFeedback.selectionClick();
-        context.read<NavigationModel>().setIndex(index);
-        Navigator.pop(context);
-      },
-      selected: selected,
-      selectedTileColor: Theme.of(context).colorScheme.primaryContainer,
     );
   }
 }
@@ -57,7 +66,9 @@ class Sidebar extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight(300),
-                    color: Theme.of(context).colorScheme.primary.withAlpha(68),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withAlpha(68),
                     height: 1.24,
                   ),
                 ),
